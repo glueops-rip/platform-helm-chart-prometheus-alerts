@@ -11,5 +11,5 @@ prometheus-alertmanagerconfig-opsgenie:
 
   # -- Amount of time to fire an alert again after the first one is sent.
   route:
-    repeatInterval: "60m"
-    groupInterval: "60m"
+    repeatInterval: "15m"
+    groupInterval: "15m"
