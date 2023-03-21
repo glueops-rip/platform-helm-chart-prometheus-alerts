@@ -1,12 +1,12 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: GlueOpsPodInBadState
+  name: glueops-pod-in-bad-state
 spec:
   groups:
-  - name: GlueOpsPodInBadState
+  - name: glueops-pod-in-bad-state
     rules:
-    - alert: GlueOpsPodInBadState
+    - alert: glueops-pod-in-bad-state
       expr: |
         (kube_pod_status_phase{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", phase=~"^(Failed|Unknown|ContainerCreating|CrashLoopBackOff|ImagePullBackOff|ErrImageNeverPull)$"} == 1)
         or
