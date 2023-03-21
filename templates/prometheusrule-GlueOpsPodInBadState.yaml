@@ -15,5 +15,4 @@ spec:
         (kube_pod_status_restarts_total{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$"} > 3)
       for: 1m
       annotations:
-        summary: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is in a bad state"
         description: A GlueOps pod is in a bad state.
