@@ -17,11 +17,11 @@ spec:
       annotations:
         description: A GlueOps pod is in a bad state.
       labels:
-  {{ if ne (toString .Values.labels.team) "nil" }}
-        team: {{ .Values.labels.team }}
+  {{ if ne (toString .Values.prometheus-alertmanagerconfig-opsgenie.labels.team) "nil" }}
+        team: {{ .Values.prometheus-alertmanagerconfig-opsgenie.labels.team }}
   {{ end }}
-  {{ if ne (toString .Values.labels.component) "nil" }}
-        component: {{ .Values.labels.component }}
+  {{ if ne (toString .Values.prometheus-alertmanagerconfig-opsgenie.labels.component) "nil" }}
+        component: {{ .Values.prometheus-alertmanagerconfig-opsgenie.labels.component }}
   {{ end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}

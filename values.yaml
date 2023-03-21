@@ -1,3 +1,5 @@
+
+
 prometheus-alertmanagerconfig-opsgenie:
   opsgenie:
     # -- Leave this value as `nil` if you provided a `vault_path`. Otherwise, this value must be set. You CANNOT have a `vault_path` and `opsgenie.apikey` defined at the same time.
