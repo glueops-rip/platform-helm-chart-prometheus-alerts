@@ -16,3 +16,12 @@ spec:
       for: 1m
       annotations:
         description: A GlueOps pod is in a bad state.
+      labels:
+  {{ if ne (toString .Values.labels.team) "nil" }}
+        team: {{ .Values.labels.team }}
+  {{ end }}
+  {{ if ne (toString .Values.labels.component) "nil" }}
+        component: {{ .Values.labels.component }}
+  {{ end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
