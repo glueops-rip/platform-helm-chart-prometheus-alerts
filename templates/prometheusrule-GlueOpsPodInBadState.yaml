@@ -16,4 +16,4 @@ spec:
       for: 1m
       annotations:
         summary: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is in a bad state"
-        description: A GlueOps pod is having problems
+        description: A GlueOps pod is in a bad state.
