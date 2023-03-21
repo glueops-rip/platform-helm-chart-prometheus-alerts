@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: GlueOpsPodInBadState
+spec:
+  groups:
+  - name: GlueOpsPodInBadState
+    rules:
+    - alert: GlueOpsPodInBadState
+      expr: |
+        (kube_pod_status_phase{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", phase=~"^(Failed|Unknown|ContainerCreating|CrashLoopBackOff|ImagePullBackOff|ErrImageNeverPull)$"} == 1)
+        or
+        (kube_pod_status_ready{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", pod!~"^(captain-redis-ha-configmap-test|captain-redis-ha-service-test)$", condition="false"} == 1)
+        or
+        (kube_pod_status_restarts_total{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$"} > 3)
+      for: 1m
+      annotations:
+        summary: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is in a bad state"
+        description: A GlueOps pod is having problems
