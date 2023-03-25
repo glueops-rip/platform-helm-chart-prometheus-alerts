@@ -8,7 +8,7 @@ spec:
     rules:
     - alert: glueops-pod-in-bad-state
       expr: |
-        (kube_pod_status_phase{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", phase=~"^(Failed|Unknown|ContainerCreating|CrashLoopBackOff|ImagePullBackOff|ErrImageNeverPull)$"} == 1)
+        (kube_pod_status_phase{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", pod!~"^(captain-redis-ha-configmap-test|captain-redis-ha-service-test)$", phase=~"^(Failed|Unknown|ContainerCreating|CrashLoopBackOff|ImagePullBackOff|ErrImageNeverPull)$"} == 1)
         or
         (kube_pod_status_ready{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", pod!~"^(captain-redis-ha-configmap-test|captain-redis-ha-service-test)$", condition="false"} == 1)
         or
@@ -35,7 +35,7 @@ spec:
   - name: glueops-node-rules
     rules:
     - alert: glueops-node-rules-NodeHighCpuUsage
-      expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 90
+      expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 95
       for: 1m
       annotations:
         description: worker node high cpu usage
