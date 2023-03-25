@@ -1,0 +1,92 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: glueops-pod-in-bad-state
+spec:
+  groups:
+  - name: glueops-pod-in-bad-state
+    rules:
+    - alert: glueops-pod-in-bad-state
+      expr: |
+        (kube_pod_status_phase{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", phase=~"^(Failed|Unknown|ContainerCreating|CrashLoopBackOff|ImagePullBackOff|ErrImageNeverPull)$"} == 1)
+        or
+        (kube_pod_status_ready{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$", pod!~"^(captain-redis-ha-configmap-test|captain-redis-ha-service-test)$", condition="false"} == 1)
+        or
+        (kube_pod_status_restarts_total{namespace=~"^(kube-system|glueops-core-.*|glueops-core)$"} > 3)
+      for: 1m
+      annotations:
+        description: A GlueOps pod is in a bad state.
+      labels:
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
+        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- end }}
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
+        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: glueops-node-rules
+spec:
+  groups:
+  - name: glueops-node-rules
+    rules:
+    - alert: glueops-node-rules-NodeHighCpuUsage
+      expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 90
+      for: 1m
+      annotations:
+        description: worker node high cpu usage
+      labels:
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
+        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- end }}
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
+        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
+    - alert: glueops-node-rules-NodeHighDiskUsage
+      expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 10
+      for: 1m
+      annotations:
+        description: worker node high disk usage
+      labels:
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
+        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- end }}
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
+        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
+    - alert: glueops-node-rules-NodeHighPvcDiskUsage
+      expr: (kubelet_volume_stats_available_bytes / kubelet_volume_stats_capacity_bytes) * 100 < 10
+      for: 1m
+      annotations:
+        description: high pvc disk usage
+      labels:
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
+        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- end }}
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
+        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
+    - alert: glueops-node-rules-NodeNotReady
+      expr: kube_node_status_condition{condition="Ready",status="false"} == 1
+      for: 8m
+      annotations:
+        description: Worker node not ready
+      labels:
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
+        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- end }}
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
+        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
