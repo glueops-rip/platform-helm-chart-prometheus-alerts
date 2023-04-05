@@ -90,3 +90,17 @@ spec:
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
+    - alert: glueops-node-rules-NodeHighMemory
+      expr: (1 - ((node_memory_MemFree_bytes + node_memory_Cached_bytes + node_memory_Buffers_bytes) / node_memory_MemTotal_bytes)) * 100 > 90
+      for: 1m
+      annotations:
+        description: Worker node high memory usage
+      labels:
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
+        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- end }}
+        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
+        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
