@@ -119,7 +119,7 @@ spec:
           sum(kubelet_volume_stats_used_bytes{namespace=~"glueops-core.*"}) by (persistentvolumeclaim, namespace)
           / on (persistentvolumeclaim, namespace) group_left
           sum(kubelet_volume_stats_capacity_bytes{namespace=~"glueops-core.*"}) by (persistentvolumeclaim, namespace)
-        )
+        ) > 0.9
       for: 1m
       annotations:
         description: A GlueOps PVC has exceeded 90% capacity.
