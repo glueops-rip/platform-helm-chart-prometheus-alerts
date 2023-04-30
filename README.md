@@ -1,6 +1,6 @@
 # glueops-prometheus-alerts
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -14,6 +14,4 @@ A Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| prometheus-alertmanagerconfig-opsgenie.labels | object | `{"alertname":"nil","component":"nil","team":"nil"}` | These labels are additional filters you can use to keep these notifications for one particular team, component, or alert. Note: you must set the same filters (with the exception of alertname) on the alert definition itself. The alert definition is also refered to as the prometheusrule. |
-| prometheus-alertmanagerconfig-opsgenie.opsgenie.apikey | string | `"nil"` | Leave this value as `nil` if you provided a `vault_path`. Otherwise, this value must be set. You CANNOT have a `vault_path` and `opsgenie.apikey` defined at the same time. |
-| prometheus-alertmanagerconfig-opsgenie.route | object | `{"groupInterval":"5m","repeatInterval":"5m"}` | Amount of time to fire an alert again after the first one is sent. |
+| labels | object | `{"alertname":"nil","component":"nil","team":"nil"}` | These labels are additional filters you can use to keep these notifications for one particular team, component, or alert. Note: you must set the same filters (with the exception of alertname) on the alert definition itself. The alert definition is also refered to as the prometheusrule. |
