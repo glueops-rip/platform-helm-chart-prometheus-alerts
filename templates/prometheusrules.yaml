@@ -17,11 +17,11 @@ spec:
       annotations:
         description: A GlueOps pod is in a bad state.
       labels:
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
-        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "team")) "nil" }}
+        team: {{ index .Values "labels" "team" | nindent 8 }}
         {{- end }}
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
-        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "component")) "nil" }}
+        component: {{ index .Values "labels" "component" | nindent 8 }}
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
@@ -40,11 +40,11 @@ spec:
       annotations:
         description: worker node high cpu usage
       labels:
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
-        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "team")) "nil" }}
+        team: {{ index .Values "labels" "team" | nindent 8 }}
         {{- end }}
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
-        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "component")) "nil" }}
+        component: {{ index .Values "labels" "component" | nindent 8 }}
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
@@ -54,11 +54,11 @@ spec:
       annotations:
         description: worker node high disk usage
       labels:
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
-        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "team")) "nil" }}
+        team: {{ index .Values "labels" "team" | nindent 8 }}
         {{- end }}
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
-        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "component")) "nil" }}
+        component: {{ index .Values "labels" "component" | nindent 8 }}
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
@@ -68,11 +68,11 @@ spec:
       annotations:
         description: high pvc disk usage
       labels:
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
-        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "team")) "nil" }}
+        team: {{ index .Values "labels" "team" | nindent 8 }}
         {{- end }}
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
-        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "component")) "nil" }}
+        component: {{ index .Values "labels" "component" | nindent 8 }}
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
@@ -82,11 +82,11 @@ spec:
       annotations:
         description: Worker node not ready
       labels:
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
-        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "team")) "nil" }}
+        team: {{ index .Values "labels" "team" | nindent 8 }}
         {{- end }}
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
-        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "component")) "nil" }}
+        component: {{ index .Values "labels" "component" | nindent 8 }}
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
@@ -96,11 +96,11 @@ spec:
       annotations:
         description: Worker node high memory usage
       labels:
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team")) "nil" }}
-        team: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "team" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "team")) "nil" }}
+        team: {{ index .Values "labels" "team" | nindent 8 }}
         {{- end }}
-        {{- if ne (toString (index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component")) "nil" }}
-        component: {{ index .Values "prometheus-alertmanagerconfig-opsgenie" "labels" "component" | nindent 8 }}
+        {{- if ne (toString (index .Values "labels" "component")) "nil" }}
+        component: {{ index .Values "labels" "component" | nindent 8 }}
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
