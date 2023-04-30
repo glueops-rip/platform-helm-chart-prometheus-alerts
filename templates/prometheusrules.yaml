@@ -104,3 +104,31 @@ spec:
         {{- end }}
         alertname: {{ .Release.Name }}
         namespace: {{ .Release.Namespace }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: glueops-pvc-near-capacity
+spec:
+  groups:
+  - name: glueops-pvc-near-capacity
+    rules:
+    - alert: glueops-pvc-near-capacity
+      expr: |
+        (
+          sum(kubelet_volume_stats_used_bytes{namespace=~"glueops-core.*"}) by (persistentvolumeclaim, namespace)
+          / on (persistentvolumeclaim, namespace) group_left
+          sum(kubelet_volume_stats_capacity_bytes{namespace=~"glueops-core.*"}) by (persistentvolumeclaim, namespace)
+        )
+      for: 1m
+      annotations:
+        description: A GlueOps PVC has exceeded 90% capacity.
+      labels:
+        {{- if ne (toString (index .Values "labels" "team")) "nil" }}
+        team: {{ index .Values "labels" "team" | nindent 8 }}
+        {{- end }}
+        {{- if ne (toString (index .Values "labels" "component")) "nil" }}
+        component: {{ index .Values "labels" "component" | nindent 8 }}
+        {{- end }}
+        alertname: {{ .Release.Name }}
+        namespace: {{ .Release.Namespace }}
